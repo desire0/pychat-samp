@@ -1,0 +1,42 @@
+{$CLEO .cs}
+
+0000: 
+
+0662: printstring "Shitty autocmdsender"
+thread 'AUTOCMDSENDER'
+
+ WAIT 8500
+
+
+WHILE TRUE
+wait 0
+
+IF
+0AAB:   file_exists "CLEO\autocmdsender.ini"
+THEN
+    //0AF0: 0@ = get_int_from_ini_file "CLEO\autocmdsender.ini" section "DELAY" key "MILISECONDS"
+    0AC8: 1@ = allocate_memory_size 1024
+    0AC8: 2@ = allocate_memory_size 1024 //copy
+    0AF4: 1@ = read_string_from_ini_file "CLEO\autocmdsender.ini" section "COMMAND" key "type "
+    0AF4: 2@ = read_string_from_ini_file "CLEO\autocmdsender.ini" section "COMMAND" key "typed "
+
+ELSE
+    0ACD: show_text_highpriority "~B~FILE MISSING : '~R~Autocmdsender.ini~B~'" time 2500
+    0A93: end_custom_thread
+END
+
+IF AND
+056D:   actor $PLAYER_ACTOR defined
+0256:   player $PLAYER_CHAR defined
+THEN
+    IF 0C14: strcmp string1 1@ string2 2@
+
+        THEN 
+            WAIT 69 
+        ELSE
+            0AF9: samp say_msg "%s" 1@
+            0AF5: write_string 1@ to_ini_file "CLEO\autocmdsender.ini" section "COMMAND" key "typed "
+
+        END  
+    END
+END
